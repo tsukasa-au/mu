@@ -18,12 +18,15 @@ for x in data_files_glob:
 
 print('Spec file resources selected: %s' % data_files)
 
+# Hooks for PyQt5, and qtconsole
+imports_pyqt5 = ['sip']
+imports_qtconsole = ['ipykernel', 'ipykernel.datapub', 'PyQt5.QtSvg', 'PyQt5.QtGui']
 
 a = Analysis(['../run.py'],
              pathex=['../'],
              binaries=None,
              datas=data_files,
-             hiddenimports = ['sip'],
+             hiddenimports = imports_pyqt5 + imports_qtconsole,
              hookspath=[],
              runtime_hooks=[],
              excludes=[],
@@ -49,11 +52,11 @@ exe = EXE(pyz,
           icon='package/icons/win_icon.ico')
 
 app = BUNDLE(exe,
-         name='mu.app',
-         icon='package/icons/mac_icon.icns',
-         bundle_identifier=None,
-         info_plist={
-            'NSHighResolutionCapable': 'True'})
+             name='mu.app',
+             icon='package/icons/mac_icon.icns',
+             bundle_identifier=None,
+             info_plist= {
+               'NSHighResolutionCapable': 'True'})
 
 # For debugging you can uncomment COLLECT and it will package to a folder
 # instead of a single executable (also comment out the "a" arguments in EXE)

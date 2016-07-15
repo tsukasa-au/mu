@@ -38,6 +38,12 @@ install:
   - cmd: pyqt5_installer.exe /S
   - cmd: python -c "import PyQt5"
 
+  # Download and install PyGame Zero
+  #- ps: Start-FileDownload 'https://dl.dropboxusercontent.com/u/74034/mu-dep/pygame-1.9.2b1-cp34-cp34m-win32.whl' -Timeout 600000
+  #- cmd: pip install wheel
+  #- cmd: pip install pygame-1.9.2b1-cp34-cp34m-win32.whl
+  #- cmd: pip install pgzero
+
   # Install python dependencies
   - cmd: pip install pyinstaller
   - cmd: pip install -r requirements.txt
@@ -49,6 +55,7 @@ install:
   - cmd: pyinstaller package\pyinstaller.spec
   - cmd: dir dist
   - ps: Rename-Item .\dist\mu.exe mu-$(get-date -f yyyy-MM-dd_HH_mm_ss).exe
+
 
 # Not a project with an msbuild file, build done at install.
 build: None

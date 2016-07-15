@@ -29,6 +29,18 @@ from PyQt5.QtWidgets import (QToolBar, QAction, QStackedWidget, QDesktopWidget,
 from PyQt5.QtGui import QKeySequence, QColor, QTextCursor, QFontDatabase
 from PyQt5.Qsci import QsciScintilla, QsciLexerPython
 from PyQt5.QtSerialPort import QSerialPort
+
+# Monkey path the import function to bypass problematic has_binding()
+from qtconsole import qt_loaders
+
+def new_load_qt(api_options):
+    result = qt_loaders.import_pyqt5()
+    api = result[-1]
+    qt_loaders.commit_api(api)
+    return result
+
+qt_loaders.load_qt = new_load_qt
+
 from qtconsole.rich_jupyter_widget import RichJupyterWidget
 from qtconsole.inprocess import QtInProcessKernelManager
 from mu.resources import load_icon, load_stylesheet, load_font_data
