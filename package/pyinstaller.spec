@@ -44,7 +44,7 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           # False hides the cli window, useful ON to debug
-          console=False,
+          console=True,
           debug=False,
           icon='package/icons/win_icon.ico')
 
