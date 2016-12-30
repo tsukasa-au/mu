@@ -16,6 +16,9 @@ init:
   # Utilise pre-installed MinGw for make
   - ps: $env:PATH = 'C:\MinGW\msys\1.0\bin;C:\MinGW\mingw32\bin;C:\MinGW\bin;' + $env:PATH
 
+  # Add Windows CRT DLL location to path
+  - ps: $env:PATH = 'C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86;C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Remote Debugger\x86;' + $env:PATH
+
   # As AppVeyor has multiple python install, check which one uses by default
   - cmd: ECHO %PYTHON% %PYTHON_VERSION% %PYTHON_ARCH%
   - cmd: python --version
@@ -34,6 +37,11 @@ init:
 
   # Check out installed python packages
   - cmd: pip freeze
+
+  # Check directories
+  #- ps: Get-ChildItem -Path "C:\Program Files (x86)\Microsoft Visual Studio*" –Recurse  –Directory
+  - cmd: dir "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Remote Debugger\x86"
+  - cmd: dir "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86"
 
 install:
   # Fix for PyQt not being installed in correct directory: https://github.com/appveyor/ci/issues/363

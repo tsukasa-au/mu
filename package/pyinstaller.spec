@@ -8,20 +8,14 @@ import PyQt5
 pyqt_dir = os.path.dirname(getfile(PyQt5))
 
 
-block_cipher = None
-
-
 # Adding all css and images as part of additional resources
 data_files_glob = glob(os.path.join('mu','resources', 'css', '*.css'))
 data_files_glob += glob(os.path.join('mu', 'resources', 'images', '*.*'))
 data_files_glob += glob(os.path.join('mu', 'resources', 'fonts', '*.*'))
-data_files = []
 # Paths are a bit tricky: glob works on cwd (project root), pyinstaller relative
 # starts on spec file location, and packed application relative starts on
 # project root directory.
-for x in data_files_glob:
-    data_files += [(os.path.join('..', x), os.path.dirname(x))]
-
+data_files = [(os.path.join('..', x), os.path.dirname(x)) for x in data_files_glob]
 print('Spec file resources selected: %s' % data_files)
 
 
@@ -35,11 +29,20 @@ a = Analysis(['../run.py'],
              excludes=[],
              win_no_prefer_redirects=False,
              win_private_assemblies=False,
-             cipher=block_cipher)
+             cipher=None)
+
+# On windows there are issues with PyInstaller not including a CRT DLL
+# https://github.com/pyinstaller/pyinstaller/issues/1566
+if os.name == 'nt':
+    dll_path = 'C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\Common7\\IDE\\Remote Debugger\\x86\\api-ms-win-crt-runtime-l1-1-0.dll'
+    if os.path.isfile(dll_path):
+        binaries = [x for x in a.binaries if x[0] != 'api-ms-win-crt-runtime-l1-1-0.dll']
+        a.binaries = binaries + [('api-ms-win-crt-runtime-l1-1-0.dll', dll_path, 'BINARY')]
+        print(a.binaries)
 
 pyz = PYZ(a.pure,
           a.zipped_data,
-          cipher=block_cipher)
+          cipher=None)
 
 exe = EXE(pyz,
           a.scripts,
