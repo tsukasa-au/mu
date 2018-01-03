@@ -57,18 +57,19 @@ script:
 # Deploy the build version in an S3 bucket
 deploy:
   provider: s3
-  access_key_id: AKIAJYJV7NN6HVHCX5NQ
+  access_key_id: AKIAJOLFMO6LWP5Y656Q
   secret_access_key:
-    secure: QHLfRUdFQX+TejhRBkgNvySkaQOskXji+iduIvKRtzvvhyr3QJHKcMNtO426GRFyKhz6sK3shqn4d5iu/m03gtbv+u1pL9pp0J2GEePzQVP8v24q9Y3oxaXaA7Tm7L2vSIrB7uhJvG5D9H0bVL9my61JvXhvySH47jLvhqHH4F9LdPzby1DXds1Z+R4YNMKE0Z4KmNOhiBHkmKdDcp61fZ91gGiScFIjaXvDb50zdGKjXTQy2t4OtFt4kVbTZWijzxKPCSLZkErfcdNNrCNeMEktk6IEV2KVru9XhDNzzslWwwsR1r2hQI39oVULa3fYXK6W7am8WXVZ6cnJB+yBsNWro3Tp5oiNCWSe6fKDEp+Io+qyhZ+R5PSdzhyRYPUHPCIY/fP/dap/4M/MAO3hZFA3mxjK/vUOc6mtMD/wTE659K4/i7PNYtKFndXXpLpYHHaTis44NLZFIxvs9wWG/ljToYDDK20vG317k5TZUZB/6EipW1DeoO/9qBUxgTdfJypp58kcZNvntUVa4ezf/Bx01ZCMFAk234l7+xAFYI7+m9ITqAPlKWI230Ki5ShzyV+kYcI/GS9cT75iok6+zIWWfyQhKUMDYZ1qb/UDM5Gz9RXoIah0UJTjFd4b3bO6Awdrs2V5Vv2EgMWuKDaHs1s3uONH+PGTluROuqFju/s=
-  bucket: mu-builds
-  region: eu-west-2
+    secure: huoABM0KwkZAk5+IfGJqInAVaTIpuIlKuPR27F3CrJUFlXy+h83z+Yzx2jiA0Hgb5r3Wst8BU3LLRanFO5iXvJ/xHHe3xohqXuwitPEOomhXriMrifiEHlo4bLmthfSL5fIiWbkg1jk6o3BaepCI/TmDPXOylXh6bTxRpMNjyJJPM5jQyQaeO+I3SrHkAmnCqgvT8ijTKNMktw02D8hDbbE61ZRYuN45Onuf33hQhvnnSLKSKJIpvVQMDQfMP1aplwlPscJPhjlQ8e2aSwUhInz+mS+Q/ExTnLJs7/2RDGKIAlObFel2wWVWScr0DovMy+OR47Ix9FI5oLnHUzVQ3TvF9dF6Ugjpx4RmXTaw5pAeThH6rz0yeh+fQEdSeuad1j/PCWOFLovA8BhxNQAg17XTA0gqoijwBF/KlcLqT03bKlBtt+RbCT+RrzXiFEeW0zhcnODcyWyLtNyBbQossltfE0Jp3jvpnubE93AOetUFZpQMnncQqXwj5I8g5MeCzfSyQ9bYw/vxm32kgr0i41v8i52BD9w1jhxJUKskF931BCYqoHiGYwNGjNQV7XusBi60biBoSe0grI/AsMrAgEhleY8YHpirOv45xOdl19vaDfzul2VbUbZZwVTg3uVIBAWGbgS2XbY4IXHBkJT1arQk5URNG32ikeIstZZuUCI=
+  bucket: elmo-microbit-deployment
+  region: ap-southeast-2
+  # Keep the build artefacts around, so they can be deployed.
   skip_cleanup: true
   local-dir: dist/
   upload-dir: $TRAVIS_OS_NAME
   acl: public_read
   on:
-    repo: mu-editor/mu
-    branch: [master, travis_bucket_move]
+    repo: tsukasa-au/mu
+    branch: master
 
 notifications:
   email:
